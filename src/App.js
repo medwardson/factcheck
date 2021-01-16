@@ -21,9 +21,10 @@ function App() {
       claimArray.forEach(function (arrayItem){
         if(arrayItem.claimReview[0].textualRating.includes("False") || arrayItem.claimReview[0].textualRating.includes("True")){
           console.log(arrayItem.text + arrayItem.claimReview.textualRating);
+          //console.log(x);
         }
       }); 
-      
+
     }).catch((e) => {
       console.log('BIG F WE GOT ANOTHER ERROR: ', e);
     });
