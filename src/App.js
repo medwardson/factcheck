@@ -11,7 +11,7 @@ function App() {
 
   const getFactData = () => {
     console.log(`Making API call to:\n\nhttps://factchecktools.googleapis.com/v1alpha1/claims:search?key=${GOOGLE_API_KEY}&query=trump did 9/11`)
-    axios.get(`https://factchecktools.googleapis.com/v1alpha1/claims:search?key=${GOOGLE_API_KEY}&query=${query}`).
+    axios.get(`https://factchecktools.googleapis.com/v1alpha1/claims:search?key=${GOOGLE_API_KEY}&languageCode=en-US&query=${query}`).
     then((data)=>{
       console.log('data: ', data);
       console.log('claims: ', data.data.claims); 
@@ -20,8 +20,9 @@ function App() {
 
       claimArray.forEach(function (arrayItem){
         if(arrayItem.claimReview[0].textualRating.includes("False") || arrayItem.claimReview[0].textualRating.includes("True")){
-          console.log(arrayItem.text + arrayItem.claimReview.textualRating);
-          //console.log(x);
+          //var ratingText = arrayItem.claimReview[0].textualRating;
+          //console.log(arrayItem.text);
+          console.log(arrayItem.text + arrayItem.claimReview[0].textualRating);
         }
       }); 
 
