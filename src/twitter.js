@@ -1,3 +1,3 @@
-export const hello = () => {
+export const main = () => {
   return console.log("hello");
 };
