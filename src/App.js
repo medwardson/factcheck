@@ -14,7 +14,16 @@ function App() {
     axios.get(`https://factchecktools.googleapis.com/v1alpha1/claims:search?key=${GOOGLE_API_KEY}&query=${query}`).
     then((data)=>{
       console.log('data: ', data);
-      console.log('claims: ', data.data.claims);
+      console.log('claims: ', data.data.claims); 
+      //store array of claims
+      var claimArray = data.data.claims;
+
+      claimArray.forEach(function (arrayItem){
+        if(arrayItem.claimReview[0].textualRating.includes("False") || arrayItem.claimReview[0].textualRating.includes("True")){
+          console.log(arrayItem.text + arrayItem.claimReview.textualRating);
+        }
+      }); 
+      
     }).catch((e) => {
       console.log('BIG F WE GOT ANOTHER ERROR: ', e);
     });
