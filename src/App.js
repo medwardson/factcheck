@@ -17,14 +17,23 @@ function App() {
       console.log('claims: ', data.data.claims); 
       //store array of claims
       var claimArray = data.data.claims;
+      var relevantClaims = [];
 
-      claimArray.forEach(function (arrayItem){
+      //grab only False or True-rated claims 
+      claimArray.forEach((arrayItem) => {
         if(arrayItem.claimReview[0].textualRating.includes("False") || arrayItem.claimReview[0].textualRating.includes("True")){
           //var ratingText = arrayItem.claimReview[0].textualRating;
           //console.log(arrayItem.text);
-          console.log(arrayItem.text + arrayItem.claimReview[0].textualRating);
+          relevantClaims.push(arrayItem.claimReview[0]);
+          //console.log(arrayItem.text + arrayItem.claimReview[0].textualRating);
         }
       }); 
+
+      //go through filtered claims and return textualRating Website
+      relevantClaims.forEach((claim) => {
+        console.log(claim.textualRating); //print true/false textRating
+        console.log(claim.url); //print website
+      })
 
     }).catch((e) => {
       console.log('BIG F WE GOT ANOTHER ERROR: ', e);
