@@ -1,7 +1,7 @@
 import "./App.css";
 import axios from 'axios';
 import React, {useState} from 'react';
-import { hello } from "./twitter.js";
+import { main } from "./twitter.js";
 
 const GOOGLE_API_KEY = 'AIzaSyDIYOa7B1fMDyEcBifamgtQvWmS4zoSTqw'
 
@@ -25,6 +25,7 @@ function App() {
         Fact Check - Hack the North 2021
         <input type="text" autoFocus="true" label="query" value={query} onChange={e => setQuery(e.target.value)}/>
         <button onClick={getFactData} variant="primary">Get Data</button>
+        <button onClick={main}>Twitter</button>
     </div>
   );
 }
