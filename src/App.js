@@ -1,23 +1,30 @@
-import logo from "./logo.svg";
 import "./App.css";
+import axios from 'axios';
+import React, {useState} from 'react';
+
+const GOOGLE_API_KEY = 'AIzaSyDIYOa7B1fMDyEcBifamgtQvWmS4zoSTqw'
+
 
 function App() {
+
+  const [query, setQuery] = useState('');
+
+  const getFactData = () => {
+    console.log(`Making API call to:\n\nhttps://factchecktools.googleapis.com/v1alpha1/claims:search?key=${GOOGLE_API_KEY}&query=trump did 9/11`)
+    axios.get(`https://factchecktools.googleapis.com/v1alpha1/claims:search?key=${GOOGLE_API_KEY}&query=${query}`).
+    then((data)=>{
+      console.log('data: ', data);
+      console.log('claims: ', data.data.claims);
+    }).catch((e) => {
+      console.log('BIG F WE GOT ANOTHER ERROR: ', e);
+    });
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        Fact Check - Hack the North 2021
+        <input type="text" autoFocus="true" label="query" value={query} onChange={e => setQuery(e.target.value)}/>
+        <button onClick={getFactData} variant="primary">Get Data</button>
     </div>
   );
 }

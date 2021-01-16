@@ -7,8 +7,9 @@ build() {
 
     export INLINE_RUNTIME_CHUNK=false
     export GENERATE_SOURCEMAP=false
+    export GOOGLE_API_KEY=AIzaSyDIYOa7B1fMDyEcBifamgtQvWmS4zoSTqw
 
-    react-scripts build
+    set GOOGLE_API_KEY=AIzaSyDIYOa7B1fMDyEcBifamgtQvWmS4zoSTqw && react-scripts build
 
     mkdir -p dist
     cp -r build/* dist
