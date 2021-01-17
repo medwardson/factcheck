@@ -2,6 +2,7 @@
 import "./App.css";
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
+import newspaper from "./newspaper.png"
 import { getTweetByID } from "./server/twitter.js"; 
 
 function App() {
@@ -10,10 +11,11 @@ function App() {
   const [verifiedClaims, setVerifiedClaims] = useState([]); //mesha u can use this array of claims to render their urls on screen!
   const [percentTrue, setPercentTrue] = useState(0);
   const [percentFalse, setPercentFalse] = useState(0);
+  const [tweetData, setTweetData] = useState('');
 
-  useEffect(() => {
-    getUrl();
-  }, []);
+  // useEffect(() => {
+  //   getUrl();
+  // }, []);
 
   const getUrl = () => {
     chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
@@ -26,6 +28,7 @@ function App() {
         tweetID = url.slice(url.length - 19)
         
         tweetData = await getTweetByID(tweetID); // doop
+        setTweetData(tweetData.text);
         console.log('tweet from front end: ', tweetData.text);
 
         claims = await getFactData(tweetData.text);
@@ -78,11 +81,33 @@ function App() {
 
   return (
     <div className="App">
-        Fact Check - Hack the North 2021
-        <button onClick={getUrl}>Verify Tweet</button>
-        <text>True percent: {percentTrue}</text>
-        <text>False percent: {percentFalse}</text>
-        <text>length of verified claims array: {verifiedClaims.length}</text>
+      <div className="topHalf">
+        <div className="title">Fact Checker</div>
+        <div className="false-info">False Information Detected in this tweet</div>
+        <div className="progress-bars">
+          <div>True percent: {percentTrue}</div>
+          <div>False percent: {percentFalse}</div>
+        </div>
+      </div>
+      <div className="line">--------------------------------------</div>
+      <div className="topHalf">
+        <div className="row-newspaper">
+          <img src={newspaper} className='newspaper'/>
+          Top Result
+        </div>
+        
+        <div className="row-profile">
+          <div className="profile">
+            S
+          </div>
+          <div className="column-profile">
+            <div>Claim: {tweetData}</div>
+            <div>Result: </div>
+            {console.log(verifiedClaims[0])}
+            <div> </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
