@@ -14,9 +14,9 @@ function App() {
   const [percentFalse, setPercentFalse] = useState(0);
   const [tweetData, setTweetData] = useState('');
 
-  // useEffect(() => {
-  //   getUrl();
-  // }, []);
+  useEffect(() => {
+    getUrl();
+  }, []);
 
   const getUrl = () => {
     chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
@@ -64,13 +64,13 @@ function App() {
             } else if (claim.textualRating == "False") {
               falseCount+= 1;
             }
-            console.log("URL: " + claim.url + "  Rating: " + claim.textualRating); //print true/false and website
           });
 
           totalSourceCount = trueCount + falseCount;
           setPercentTrue(trueCount/totalSourceCount * 100);
           setPercentFalse(falseCount/totalSourceCount * 100);
           console.log("Based on " + totalSourceCount + " sources, this claim is " + trueCount + " true " + falseCount + " false.");
+          console.log('percent true: ', trueCount/totalSourceCount * 100, 'percent false: ', falseCount/totalSourceCount * 100)
         } else { //no claims in array
           console.log("We couldn't find any results, sorry about that");
         }
@@ -87,10 +87,10 @@ function App() {
         <div className="false-info">False Information Detected in this tweet</div>
         <div className="progress-bars">
           <div className="single-progress-bar">True</div>
-          <ProgressBar completed={60} bgcolor={'#5DB075'} labelColor={'#000000'} margin={'2px'}/>
+          <ProgressBar width={'85%'} height={'15px'} completed={percentTrue} bgcolor={'#5DB075'} labelColor={'#000000'} margin={'2px'}/>
 
           <div className="single-progress-bar">False</div>
-          <ProgressBar completed={40} bgcolor={'#F38016'} labelColor={'#000000'} margin={'2px'}/>
+          <ProgressBar width={'85%'} height={'15px'} completed={percentFalse} bgcolor={'#F38016'} labelColor={'#000000'} margin={'2px'}/>
         </div>
       </div>
       <div className="line">--------------------------------------</div>
@@ -105,10 +105,8 @@ function App() {
             S
           </div>
           <div className="column-profile">
-            <div>Claim: {tweetData}</div>
-            <div>Claim</div>
-            <div className="row-mini">Result: <div className="true">True</div></div>
-            {console.log(verifiedClaims[0])}
+            <div className="row-mini">Result: {percentTrue >= percentFalse ? <div className="true">True</div> : <div className="false">False</div>}</div>
+            <div className="claim">Claim: {tweetData}</div>
             <div> </div>
           </div>
         </div>

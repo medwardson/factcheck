@@ -17,10 +17,14 @@
   margin-right: 15px;
 }
 .line{
-  margin-top:30px;
-  margin-bottom:30px;
+  margin-top:20px;
+  margin-bottom:20px;
 }
 
+.title{
+  font-size: medium;
+  font-weight: bold;
+}
 
 .false-info{
   margin-top: 20px;
@@ -28,6 +32,7 @@
 
 .progress-bars{
   margin-top: 10px;
+  margin-left: 20px;
 }
 
 .row{
@@ -71,10 +76,27 @@
 
 .column-profile{
   margin-left: 20px;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .true {
   background-color: #5DB075;
+  border-radius: 20px;
+  width: 40px;
+  padding: 3px;
+  margin-left: 20px;
+  color: white;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.false {
+  background-color: #F38016;
   border-radius: 20px;
   width: 40px;
   padding: 3px;
@@ -102,4 +124,8 @@
 .row-mini{
   display:flex;
   flex-direction: row;
+}
+
+.claim{
+  margin-top: 10px;
 }
