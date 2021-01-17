@@ -55,6 +55,8 @@ function App() {
             if (arrayItem.claimReview[0].textualRating == ("False") || arrayItem.claimReview[0].textualRating == ("True")) {
               relevantClaims.push(arrayItem.claimReview[0]);
               setVerifiedClaims(verifiedClaims => [...verifiedClaims, arrayItem.claimReview[0]]);
+              console.log("Source Name: " + arrayItem.claimReview[0].publisher.name);
+              console.log("Date Article Was Posted: " + arrayItem.claimDate);
             }
           });
 
@@ -107,7 +109,7 @@ function App() {
           <div className="column-profile">
             <div className="row-mini">Result: {percentTrue >= percentFalse ? <div className="true">True</div> : <div className="false">False</div>}</div>
             <div className="claim">Claim: {tweetData}</div>
-            <div> </div>
+            <button className="url-button" onClick={console.log("pressed the url button")}>Find Out Why</button>
           </div>
         </div>
       </div>
