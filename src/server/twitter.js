@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export const getTweetByID = (tweetID) => {
-  console.log('twitter api call 200...');
+  console.log('twitter api call ...');
+  console.log('twitter id: ', tweetID);
   return axios.get(`http://localhost:5000/factCheck?tweetID=${tweetID}`)
   .then(response => {
-      console.log('success from helper function : ', response);
-      return response;
+      return response.data.data.data;
   }).catch(error => {
     console.log('error : ', error)
   })
