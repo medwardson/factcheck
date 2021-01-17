@@ -1,4 +1,5 @@
 .App {
+  margin-top: 5%;
   text-align: center;
   width: 200px;
   height:200px;
@@ -45,14 +46,21 @@
 .true {
   background-color: #5DB075;
   border-radius: 20px;
-  width: 30%;
+  width: 20%;
+  padding: 5px;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
   color: white;
   font-family: Inter;
   font-style: normal;
   font-weight: 600;
-  font-size: 80%;
+  font-size: 12px;
 }
 
-.progressBars{
-  display: inline-block;
+.progress {
+  display: flex;
+  flex-direction: row;
+  margin-left: 200px;
+  background-color: tomato;
 }

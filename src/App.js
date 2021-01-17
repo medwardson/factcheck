@@ -76,8 +76,11 @@ function App() {
   return (
     <div className="App">
         Fact Check - Hack the North 2021
+	    <div className="progress">
         <ProgressBar completed={60} bgcolor={'#5DB075'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
-        <ProgressBar completed={40} bgcolor={'#F38016'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
+       	<p>true!</p>
+    	</div>
+	 <ProgressBar completed={40} bgcolor={'#F38016'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
         <ProgressBar completed={10} bgcolor={'#F68383'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
         <button onClick={getUrl}>Verify Tweet</button>
         <div className='true'>True</div>
