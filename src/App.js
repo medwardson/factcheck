@@ -2,7 +2,8 @@
 import "./App.css";
 import axios from 'axios';
 import React, {useState} from 'react';
-import { getTweetByID } from "./server/twitter.js"; 
+import { getTweetByID } from "./server/twitter.js";
+import ProgressBar from '@ramonak/react-progress-bar';
 
 function App() {
 
@@ -75,8 +76,11 @@ function App() {
   return (
     <div className="App">
         Fact Check - Hack the North 2021
+        <ProgressBar completed={60} bgcolor={'#5DB075'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
+        <ProgressBar completed={40} bgcolor={'#F38016'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
+        <ProgressBar completed={10} bgcolor={'#F68383'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
         <button onClick={getUrl}>Verify Tweet</button>
-        
+        <div className='true'>True</div>
         <button onClick={getFactData} variant="primary">Get Data</button>
         
         <text>True percent: {percentTrue}</text>
