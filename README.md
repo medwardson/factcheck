@@ -1,8 +1,8 @@
 Welcome to FactCheck!  Here are the steps to get the extension working.
 
 1. Clone our repo to your local machine.
-2. run <<npm run dev>> in a terminal for this directory.
-3. In a separate terminal, run <<npm run build>>
+2. run <npm run dev> in a terminal for this directory.
+3. In a separate terminal, run <npm run build>
 4. Visit "chrome://extensions"
 5. Turn on developer mode
 6. Select "Load Unpacked"
