@@ -10,8 +10,8 @@ function App() {
 
   let tweetIDTest = '1350246702989549570'
   const [verifiedClaims, setVerifiedClaims] = useState([]); //mesha u can use this array of claims to render their urls on screen!
-  const [percentTrue, setPercentTrue] = useState(0);
-  const [percentFalse, setPercentFalse] = useState(0);
+  const [percentTrue, setPercentTrue] = useState(-20);
+  const [percentFalse, setPercentFalse] = useState(20);
   const [tweetData, setTweetData] = useState('');
 
   useEffect(() => {
@@ -89,10 +89,10 @@ function App() {
         <div className="false-info">False Information Detected in this tweet</div>
         <div className="progress-bars">
           <div className="single-progress-bar">True</div>
-          <ProgressBar width={'85%'} height={'15px'} completed={percentTrue} bgcolor={'#5DB075'} labelColor={'#000000'} margin={'2px'}/>
+          <ProgressBar width={'85%'} height={'15px'} completed={percentTrue+20} bgcolor={'#5DB075'} labelColor={'#000000'} margin={'2px'}/>
 
           <div className="single-progress-bar">False</div>
-          <ProgressBar width={'85%'} height={'15px'} completed={percentFalse} bgcolor={'#F38016'} labelColor={'#000000'} margin={'2px'}/>
+          <ProgressBar width={'85%'} height={'15px'} completed={percentFalse-20} bgcolor={'#F38016'} labelColor={'#000000'} margin={'2px'}/>
         </div>
       </div>
       <div className="line">--------------------------------------</div>
