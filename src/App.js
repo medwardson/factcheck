@@ -1,7 +1,7 @@
 /*global chrome*/
 import "./App.css";
 import axios from 'axios';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { getTweetByID } from "./server/twitter.js"; 
 
 function App() {
@@ -10,6 +10,10 @@ function App() {
   const [verifiedClaims, setVerifiedClaims] = useState([]); //mesha u can use this array of claims to render their urls on screen!
   const [percentTrue, setPercentTrue] = useState(0);
   const [percentFalse, setPercentFalse] = useState(0);
+
+  useEffect(() => {
+    getUrl();
+  }, []);
 
   const getUrl = () => {
     chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
