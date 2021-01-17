@@ -76,9 +76,6 @@ function App() {
     <div className="App">
         Fact Check - Hack the North 2021
         <button onClick={getUrl}>Verify Tweet</button>
-        
-        <button onClick={getFactData} variant="primary">Get Data</button>
-        
         <text>True percent: {percentTrue}</text>
         <text>False percent: {percentFalse}</text>
         <text>length of verified claims array: {verifiedClaims.length}</text>
