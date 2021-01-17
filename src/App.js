@@ -1,16 +1,22 @@
 /*global chrome*/
 import "./App.css";
 import axios from 'axios';
-import React, {useState} from 'react';
-import { getTweetByID } from "./server/twitter.js";
+import React, {useEffect, useState} from 'react';
+import newspaper from "./newspaper.png"
+import { getTweetByID } from "./server/twitter.js"; 
 import ProgressBar from '@ramonak/react-progress-bar';
 
 function App() {
 
   let tweetIDTest = '1350246702989549570'
   const [verifiedClaims, setVerifiedClaims] = useState([]); //mesha u can use this array of claims to render their urls on screen!
-  const [percentTrue, setPercentTrue] = useState(0);
-  const [percentFalse, setPercentFalse] = useState(0);
+  const [percentTrue, setPercentTrue] = useState(-20);
+  const [percentFalse, setPercentFalse] = useState(20);
+  const [tweetData, setTweetData] = useState('');
+
+  useEffect(() => {
+    getUrl();
+  }, []);
 
   const getUrl = () => {
     chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
@@ -23,6 +29,7 @@ function App() {
         tweetID = url.slice(url.length - 19)
         
         tweetData = await getTweetByID(tweetID); // doop
+        setTweetData(tweetData.text);
         console.log('tweet from front end: ', tweetData.text);
 
         claims = await getFactData(tweetData.text);
@@ -57,13 +64,13 @@ function App() {
             } else if (claim.textualRating == "False") {
               falseCount+= 1;
             }
-            console.log("URL: " + claim.url + "  Rating: " + claim.textualRating); //print true/false and website
           });
 
           totalSourceCount = trueCount + falseCount;
           setPercentTrue(trueCount/totalSourceCount * 100);
           setPercentFalse(falseCount/totalSourceCount * 100);
           console.log("Based on " + totalSourceCount + " sources, this claim is " + trueCount + " true " + falseCount + " false.");
+          console.log('percent true: ', trueCount/totalSourceCount * 100, 'percent false: ', falseCount/totalSourceCount * 100)
         } else { //no claims in array
           console.log("We couldn't find any results, sorry about that");
         }
@@ -75,20 +82,35 @@ function App() {
 
   return (
     <div className="App">
-        Fact Check - Hack the North 2021
-	    <div className="progress">
-        <ProgressBar completed={60} bgcolor={'#5DB075'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
-       	<p>true!</p>
-    	</div>
-	 <ProgressBar completed={40} bgcolor={'#F38016'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
-        <ProgressBar completed={10} bgcolor={'#F68383'} labelAlignment={'outside'} labelColor={'#000000'} margin={'2px'}/>
-        <button onClick={getUrl}>Verify Tweet</button>
-        <div className='true'>True</div>
-        <button onClick={getFactData} variant="primary">Get Data</button>
+      <div className="topHalf">
+        <div className="title">Fact Checker</div>
+        <div className="false-info">False Information Detected in this tweet</div>
+        <div className="progress-bars">
+          <div className="single-progress-bar">True</div>
+          <ProgressBar width={'85%'} height={'15px'} completed={percentTrue+20} bgcolor={'#5DB075'} labelColor={'#000000'} margin={'2px'}/>
+
+          <div className="single-progress-bar">False</div>
+          <ProgressBar width={'85%'} height={'15px'} completed={percentFalse-20} bgcolor={'#F38016'} labelColor={'#000000'} margin={'2px'}/>
+        </div>
+      </div>
+      <div className="line">--------------------------------------</div>
+      <div className="topHalf">
+        <div className="row-newspaper">
+          <img src={newspaper} className='newspaper'/>
+          Top Result
+        </div>
         
-        <text>True percent: {percentTrue}</text>
-        <text>False percent: {percentFalse}</text>
-        <text>length of verified claims array: {verifiedClaims.length}</text>
+        <div className="row-profile">
+          <div className="profile">
+            S
+          </div>
+          <div className="column-profile">
+            <div className="row-mini">Result: {percentTrue >= percentFalse ? <div className="true">True</div> : <div className="false">False</div>}</div>
+            <div className="claim">Claim: {tweetData}</div>
+            <div> </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
