@@ -4,6 +4,7 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import newspaper from "./newspaper.png"
 import { getTweetByID } from "./server/twitter.js"; 
+import ProgressBar from '@ramonak/react-progress-bar';
 
 function App() {
 
@@ -85,8 +86,11 @@ function App() {
         <div className="title">Fact Checker</div>
         <div className="false-info">False Information Detected in this tweet</div>
         <div className="progress-bars">
-          <div>True percent: {percentTrue}</div>
-          <div>False percent: {percentFalse}</div>
+          <div className="single-progress-bar">True</div>
+          <ProgressBar completed={60} bgcolor={'#5DB075'} labelColor={'#000000'} margin={'2px'}/>
+
+          <div className="single-progress-bar">False</div>
+          <ProgressBar completed={40} bgcolor={'#F38016'} labelColor={'#000000'} margin={'2px'}/>
         </div>
       </div>
       <div className="line">--------------------------------------</div>
@@ -102,7 +106,8 @@ function App() {
           </div>
           <div className="column-profile">
             <div>Claim: {tweetData}</div>
-            <div>Result: </div>
+            <div>Claim</div>
+            <div className="row-mini">Result: <div className="true">True</div></div>
             {console.log(verifiedClaims[0])}
             <div> </div>
           </div>
