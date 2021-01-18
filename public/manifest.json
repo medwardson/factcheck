@@ -2,7 +2,7 @@
   "name": "Fact Checker",
   "version": "1.0.0",
   "permissions": ["tabs"],
-  "manifest_version": 3,
+  "manifest_version": 2,
   "description": "Check a tweet to verify whether it is fake news or not!",
   "icons": {
       "512": "logo512.png"

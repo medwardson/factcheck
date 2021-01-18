@@ -10,9 +10,14 @@ function App() {
 
   let tweetIDTest = '1350246702989549570'
   const [verifiedClaims, setVerifiedClaims] = useState([]); //mesha u can use this array of claims to render their urls on screen!
-  const [percentTrue, setPercentTrue] = useState(-20);
-  const [percentFalse, setPercentFalse] = useState(20);
+  const [percentTrue, setPercentTrue] = useState(0);
+  const [percentFalse, setPercentFalse] = useState(0);
   const [tweetData, setTweetData] = useState('');
+  const [profileLetter, setProfileLetter] = useState('');
+  const [source, setSource] = useState('');
+  const [articleUrl, setArticleUrl] = useState('');
+  const [isTwitter, setIsTwitter] = useState(false);
+  const [hasData, setHasData] = useState(false);
 
   useEffect(() => {
     getUrl();
@@ -25,13 +30,12 @@ function App() {
       let tweetData = '';
       let url = tabs[0].url;
 
-      if(url.includes('status')){
-        tweetID = url.slice(url.length - 19)
-        
+      if(url.includes('status') && url.includes('twitter')){
+        setIsTwitter(true);
+        tweetID = url.slice(url.length - 19);
         tweetData = await getTweetByID(tweetID); // doop
         setTweetData(tweetData.text);
         console.log('tweet from front end: ', tweetData.text);
-
         claims = await getFactData(tweetData.text);
         console.log('claims from front end: ', claims);
       }
@@ -49,8 +53,13 @@ function App() {
         var totalSourceCount = 0;
         var returnedClaims = (data.data.claims);
         var relevantClaims = []; //stores only False or True claims
-
         if (returnedClaims.length != 0) { //grab only False or True-rated claims if array is populated
+          console.log(returnedClaims[0]);
+          setHasData(true);
+          setProfileLetter(returnedClaims[0].claimReview[0].publisher.name[0])
+          setSource(returnedClaims[0].claimReview[0].publisher.name)
+          setArticleUrl(returnedClaims[0].claimReview[0].url)
+          console.log("Publisher: ", returnedClaims[0].claimReview[0].publisher.name);
           returnedClaims.forEach((arrayItem) => {
             if (arrayItem.claimReview[0].textualRating == ("False") || arrayItem.claimReview[0].textualRating == ("True")) {
               relevantClaims.push(arrayItem.claimReview[0]);
@@ -79,38 +88,49 @@ function App() {
         console.log('BIG F WE GOT ANOTHER ERROR: ', e);
       });
   }
-
   return (
     <div className="App">
-      <div className="topHalf">
-        <div className="title">Fact Checker</div>
-        <div className="false-info">False Information Detected in this tweet</div>
-        <div className="progress-bars">
-          <div className="single-progress-bar">True</div>
-          <ProgressBar width={'85%'} height={'15px'} completed={percentTrue+20} bgcolor={'#5DB075'} labelColor={'#000000'} margin={'2px'}/>
-
-          <div className="single-progress-bar">False</div>
-          <ProgressBar width={'85%'} height={'15px'} completed={percentFalse-20} bgcolor={'#F38016'} labelColor={'#000000'} margin={'2px'}/>
-        </div>
-      </div>
-      <div className="line">--------------------------------------</div>
-      <div className="topHalf">
-        <div className="row-newspaper">
-          <img src={newspaper} className='newspaper'/>
-          Top Result
-        </div>
-        
-        <div className="row-profile">
-          <div className="profile">
-            S
+      {isTwitter &&
+      <div className="wrapper">
+        {hasData &&
+        <div>
+          <div className="topHalf">
+            <div className="title">Fact Checker</div>
+            <div className="false-info">False Information Detected in this tweet</div>
+            <div className="progress-bars">
+              <div className="single-progress-bar">True</div>
+              <ProgressBar width={'85%'} height={'15px'} completed={percentTrue} bgcolor={'#5DB075'} labelColor={'#000000'} margin={'2px'}/>
+              <div className="single-progress-bar">False</div>
+              <ProgressBar width={'85%'} height={'15px'} completed={percentFalse} bgcolor={'#F38016'} labelColor={'#000000'} margin={'2px'}/>
+            </div>
           </div>
-          <div className="column-profile">
-            <div className="row-mini">Result: {percentTrue >= percentFalse ? <div className="true">True</div> : <div className="false">False</div>}</div>
-            <div className="claim">Claim: {tweetData}</div>
-            <div> </div>
+        <div className="line">--------------------------------------</div>
+        <div className="topHalf">
+          <div className="row-newspaper">
+            <img src={newspaper} className='newspaper'/>
+            Top Result
+          </div>
+          <div className="row-profile">
+            <div className="profile">
+              {profileLetter}
+            </div>
+            <div className="column-profile">
+              <div className="row-mini">Result: {percentTrue >= percentFalse ? <div className="true">True</div> : <div className="false">False</div>}</div>
+              <div className="claim">Claim: {tweetData}</div>
+              <div className="sourceName" >Source: <a href={articleUrl} target={"_blank"}> {source} </a></div>
+              <div> </div>
+            </div>
           </div>
         </div>
-      </div>
+        </div>
+        }    
+        {!hasData && 
+          <div>
+            No data was available regarding this post.
+          </div>
+          }
+      </div>}
+      {!isTwitter && <div>Data not available from this website.</div>}
     </div>
   );
 }
