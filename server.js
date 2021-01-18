@@ -7,7 +7,6 @@ const cors = require('cors');
 const bearer = 'AAAAAAAAAAAAAAAAAAAAACxdLwEAAAAAMCd47gyu2r7pQ6EboheLNzED2o0%3DhToZZoq0JAJ3khR0reVFaxkmAk9EgCv9yZIFvANz0AUfzZ3LWR'
 
 app.use(cors());
-app.use(express.static("dist"))
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -29,6 +28,6 @@ app.get('/factCheck', async (req, res) => {
   
 })
 
-app.listen(process.env.PORT || 3000, 
-  () => console.log("seriver is running..."));
-
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
