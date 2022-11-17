@@ -1,7 +1,7 @@
 const express = require('express')
 const axios = require('axios')
 const app = express()
-const port = 5000
+const port = 3000
 const cors = require('cors');
 
 const bearer = 'AAAAAAAAAAAAAAAAAAAAACxdLwEAAAAAMCd47gyu2r7pQ6EboheLNzED2o0%3DhToZZoq0JAJ3khR0reVFaxkmAk9EgCv9yZIFvANz0AUfzZ3LWR'
